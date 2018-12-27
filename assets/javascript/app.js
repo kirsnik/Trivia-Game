@@ -11,9 +11,22 @@ $.ajax({ /*   */
     // console.log(response.results[0].question, response.results[0].incorrect_answers + "," + response.results[0].correct_answer,"this is questions")
 
     var questionGame = response.results[0].question;
-    console.log('questionGame', questionGame);
-    var qg = $("<p>").text(questionGame);
-    $("#quiz").prepend(qg);
+
+    for (var i = 0; i < response.results.length; i++){
+        console.log('results', response.results[i]);
+        console.log('i', );
+        
+        qc = $("<p>").text(response.results[i].question);
+        
+         $("#quiz").append(qc);
+
+
+
+    }
+
+    // console.log('questionGame', questionGame);
+    // var qg = $("<p>").text(questionGame);
+    // $("#quiz").prepend(qg);
 
     function randomChoices(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
@@ -39,7 +52,6 @@ $.ajax({ /*   */
     console.log('first var', questionChoice);
     questionChoice = randomChoices(questionChoice);
     console.log('questionChoice random', questionChoice);
-    qc = $("<p>").text(questionChoice);
     $("#quiz").append(qc);
 
     // var correctAns = response.results[0].correct_answer;

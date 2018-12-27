@@ -18,8 +18,13 @@ $.ajax({ /*   */
         
         var qc = $("<p>").text(response.results[i].question);
          $("#quiz").append(qc);
-         var radioButton = $('<input type="radio" value=' + response.results[i].incorrect_answers[i]+'> <label>'+  response.results[i].incorrect_answers[i] + '</label>');
+
+        for( let j = 0; j < response.results[i].incorrect_answers.length; j++){
+            console.log("asdf")
+            
+         var radioButton = $('<input type="radio" value=' + response.results[i].incorrect_answers[j]+'> <label>'+  response.results[i].incorrect_answers[j] + '</label>');
          $("#quiz").append(radioButton);
+        }       
 
 
 

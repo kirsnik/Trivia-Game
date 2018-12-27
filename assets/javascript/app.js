@@ -12,18 +12,20 @@ $.ajax({ /*   */
 
     var questionGame = response.results[0].question;
 
-    for (var i = 0; i < response.results.length; i++){
+    for (let i = 0; i < response.results.length; i++){
         console.log('results', response.results[i]);
         console.log('i', );
         
-        qc = $("<p>").text(response.results[i].question);
-        
+        var qc = $("<p>").text(response.results[i].question);
          $("#quiz").append(qc);
+         var radioButton = $('<input type="radio" value=' + response.results[i].incorrect_answers[i]+'> <label>'+  response.results[i].incorrect_answers[i] + '</label>');
+         $("#quiz").append(radioButton);
+
 
 
 
     }
-
+  
     // console.log('questionGame', questionGame);
     // var qg = $("<p>").text(questionGame);
     // $("#quiz").prepend(qg);

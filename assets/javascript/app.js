@@ -5,54 +5,91 @@ $.ajax({ /*   */
     /*   */
     method: "GET" /*   */
 
-}).then(function (response) { /*   */
+}).then(function(response) { /*   */
     console.log('response', response); /*   */
 
+    // array to store user answer
+    var answers = [];
+
+    // onclick start game
+    var startGame = $("<button>", {
+        id: "start",
+        text: "Start"
+    });
+    $("#startGame").append(startGame).on('click', function() {
+        $(this).hide();
+        $("#quiz").show();
+        displayTest();
+    });
+
+
+    //function to display questions
+    var displayTest = function() {
+        // a for loop that pulls the response, creates a <p> element that is then appended to id:quiz
+        for (let i = 9; i < response.results.length; i++) {
+            var question = response.results[i];
+            var qc = $("<p>").text(question.question);
+            $("#quiz").append(qc);
+
+            var incorrectAns = question.incorrect_answers;
+            var correctAns = question.correct_answer;
+            console.log('this is the var for this', correctAns);
+            var randomArr = incorrectAns.concat(correctAns);
+            var answerArr = randomChoices(randomArr);
+
+            console.log('answerArr', answerArr);
+            for (let j = 0; j < answerArr.length; j++) {
+                // console.log("asdf")
+
+
+                var radioButton = $('<button value = "randomChoices(answerArr[j])" > ' + randomChoices(answerArr[j]) + '</button>');
+                console.log('THIs IS THE ANSWER', correctAns);
+                $("#quiz").append(radioButton);
 
 
 
-    function scoreboard() {
+            }
+            $("button").click(function(event) {
+
+                var userResponse = event.target.innerHTML;
+                answers.push(userResponse);
+                console.log('userResponse', answers);
+
+            })
 
 
-        var correctPoint = 0;
-        var incorrectPoint = 0;
-        var unasweredPoint = 0;
-        var timer = 30;
-
-    }
-
-    for (let i = 0; i < response.results.length; i++) {
-        var qc = $("<p>").text(response.results[i].question);
-        $("#quiz").append(qc);
-
-        var incorrectAns = response.results[i].incorrect_answers;
-        var correctAns = response.results[i].correct_answer;
-        var randomArr = incorrectAns.concat(correctAns);
-        var answerArr = randomChoices(randomArr);
-
-        console.log('answerArr', answerArr);
-        for (let j = 0; j < answerArr.length; j++) {
-            // console.log("asdf")
-
-
-            var radioButton = $('<button value=' + randomChoices(answerArr[j]) + '> ' + randomChoices(answerArr[j]) + '</button>');
-            $("#quiz").append(radioButton);
-
-           
         }
+        return answerArr;
     }
 
-    $( "button" ).click( function(){
-        console.log(event.currentTarget.innerHTML);
+    function gradeTest(userAnswers, test) {
 
-        var number = parseInt($('#youranswerdiv').text());
-          number+=1;
-          $('#youranswerdiv').text(number);
+        var correctAnswers = 0;
+        /* 1st case  all answered
+           get number of test questions length
+           track number of right answers
+           for each question 
+               if userAnswer === the testQuestion.correct_answer, line 34 test is an array of objects with correct_answer property
+                   give 1 point to correctAnswers 
+         
+        */
+        return correctAnswers;
+    }
 
-      });
+
+    setTimeout(function() {
+        /* Where you would do work for after 30 sec, remove / hide test questions, grade test, display results */
+    }, 30000)
 
 
-    
+    setInterval(function() {
+        /* Every one second update timer html 
+          I need a counter that starts at 30 and counts down to 0
+        */
+    }, 1000)
+
+
+    var correctAnswers = $('<div id "correctAnswers">' + '0' + '</div>');
 
 
     function randomChoices(array) {

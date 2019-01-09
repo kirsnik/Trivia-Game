@@ -5,7 +5,7 @@ $.ajax({ /*   */
     /*   */
     method: "GET" /*   */
 
-}).then(function(response) { /*   */
+}).then(function (response) { /*   */
     console.log('response', response); /*   */
 
     // array to store user answer
@@ -16,7 +16,7 @@ $.ajax({ /*   */
         id: "start",
         text: "Start"
     });
-    $("#startGame").append(startGame).on('click', function() {
+    $("#startGame").append(startGame).on('click', function () {
         $(this).hide();
         $("#quiz").show();
         displayTest();
@@ -24,12 +24,15 @@ $.ajax({ /*   */
 
 
     //function to display questions
-    var displayTest = function() {
+    function displayTest() {
         // a for loop that pulls the response, creates a <p> element that is then appended to id:quiz
         for (let i = 9; i < response.results.length; i++) {
             var question = response.results[i];
-            var qc = $("<p>").text(question.question);
-            $("#quiz").append(qc);
+            var questDiv = $("<div>")
+            $(questDiv).attr('id', 'quest');
+            var qc = $("<p>" + "<br>").text(question.question);
+            $(questDiv).append(qc);
+            $("#quiz").append(questDiv);
 
             var incorrectAns = question.incorrect_answers;
             var correctAns = question.correct_answer;
@@ -44,52 +47,56 @@ $.ajax({ /*   */
 
                 var radioButton = $('<button value = "randomChoices(answerArr[j])" > ' + randomChoices(answerArr[j]) + '</button>');
                 console.log('THIs IS THE ANSWER', correctAns);
-                $("#quiz").append(radioButton);
+                $(questDiv).append(radioButton);
 
 
 
             }
-            $("button").click(function(event) {
+
+            $(questDiv).one("click", "button", function (event) {
 
                 var userResponse = event.target.innerHTML;
                 answers.push(userResponse);
-                console.log('userResponse', answers);
+                if(typeof userResponse !== 'undefined') {
 
-            })
+                    gradeTest(userResponse, correctAns);
+                
+                    console.log('figure the grade', gradeTest(userResponse, correctAns));
+                    
+                }
 
+            });
 
+            function gradeTest(user1, test) {
+                if (parseInt(user1) === test){
+                    alert("Did it");
+                }
+    
+
+            }
         }
-        return answerArr;
-    }
-
-    function gradeTest(userAnswers, test) {
-
-        var correctAnswers = 0;
-        /* 1st case  all answered
-           get number of test questions length
-           track number of right answers
-           for each question 
-               if userAnswer === the testQuestion.correct_answer, line 34 test is an array of objects with correct_answer property
-                   give 1 point to correctAnswers 
-         
-        */
-        return correctAnswers;
     }
 
 
-    setTimeout(function() {
-        /* Where you would do work for after 30 sec, remove / hide test questions, grade test, display results */
-    }, 30000)
 
 
-    setInterval(function() {
-        /* Every one second update timer html 
-          I need a counter that starts at 30 and counts down to 0
-        */
-    }, 1000)
 
 
-    var correctAnswers = $('<div id "correctAnswers">' + '0' + '</div>');
+
+
+    // function setTimeout() {
+    //     /* Where you would do work for after 30 sec, remove / hide test questions, grade test, display results */
+
+    // }
+    // 30000;
+
+
+    // DisplayTimer(function () {
+
+    // }, 1000)
+
+
+
 
 
     function randomChoices(array) {
